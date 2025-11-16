@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Portfolio - Ronak Togadiya</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom Dark Slate Theme Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Slate 900 - Deep Slate Dark Background */
+            color: #e2e8f0; /* Slate 200 - Light Text */
+        }
+        
+        /* Anchor offset for sticky header and vertical nav */
+        section[id] {
+            scroll-margin-top: 2rem; 
+            padding-left: 2rem; /* Add padding for the fixed left nav area */
+        }
+        
+        /* New Accent Colors */
+        .accent-primary { color: #14b8a6; } /* Teal 500 */
+        .accent-secondary { color: #84cc16; } /* Lime 500 (Neon Green) */
+        
+        /* Vertical Nav Link Styling */
+        .nav-link {
+            transition: all 0.2s ease;
+            position: relative;
+            padding-left: 1.5rem; /* Space for the line */
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 0; /* Default: hidden */
+            background-color: #84cc16;
+            transition: height 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: #14b8a6; /* Teal on hover */
+        }
+
+        .nav-link.active-link {
+            color: #84cc16; /* Neon Green when active */
+            font-weight: 700;
+        }
+
+        .nav-link.active-link::before {
+            height: 100%; /* Full height line for active state */
+        }
+
+        /* Hero text glow */
+        .hero-title {
+            text-shadow: 0 0 10px rgba(20, 184, 166, 0.5); /* Teal glow */
+        }
+
+        /* Project card hover effect */
+        .project-card:hover {
+            box-shadow: 0 10px 15px rgba(20, 184, 166, 0.2); /* Teal shadow */
+            transform: translateY(-2px);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-dark': '#0f172a', /* Slate 900 */
+                        'dark-surface': '#1e293b', /* Slate 800 */
+                        'accent-teal': '#14b8a6',
+                        'accent-lime': '#84cc16',
+                        'text-light': '#e2e8f0',
+                    }
+                }
+            }
+        }
+
+        // JavaScript for active vertical link highlighting
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            const options = {
+                rootMargin: '-20% 0px -70% 0px', 
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                navLinks.forEach(l => l.classList.remove('active-link'));
+                
+                let activeId = null;
+                entries.reverse().forEach(entry => {
+                    if (entry.isIntersecting && activeId === null) {
+                        activeId = entry.target.getAttribute('id');
+                    }
+                });
+
+                if (activeId) {
+                    const link = document.querySelector(`.nav-link[href="#${activeId}"]`);
+                    if (link) {
+                        link.classList.add('active-link');
+                    }
+                } else if (window.scrollY === 0) {
+                    const homeLink = document.querySelector('.nav-link[href="#cover-page"]');
+                    if (homeLink) homeLink.classList.add('active-link');
+                }
+            }, options);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            const homeLinkInitial = document.querySelector('.nav-link[href="#cover-page"]');
+            if (homeLinkInitial) homeLinkInitial.classList.add('active-link');
+        });
+    </script>
+</head>
+
+<body class="text-text-light min-h-screen">
+
+    <nav class="fixed top-0 left-0 h-full w-60 bg-dark-surface p-6 shadow-2xl border-r border-slate-700 z-20 hidden lg:block">
+        <h1 class="text-3xl font-extrabold mb-8 text-accent-teal tracking-wider">Ronak Togadiya</h1>
+        <ul class="space-y-4 text-lg font-medium">
+            <li><a href="#cover-page" class="nav-link">Home</a></li>
+            <li><a href="#introduction" class="nav-link">Introduction</a></li>
+            <li><a href="#resume" class="nav-link">Experience</a></li>
+            <li><a href="#projects" class="nav-link">Projects</a></li>
+            <li><a href="#skills" class="nav-link">Skills</a></li>
+            <li><a href="#leadership" class="nav-link">Collaboration</a></li>
+            <li><a href="#ethics" class="nav-link">Ethics</a></li>
+            <li><a href="#aspirations" class="nav-link">Future Goals</a></li>
+            <li><a href="#conclusion" class="nav-link">Assessment</a></li>
+        </ul>
+    </nav>
+    
+    <header class="bg-primary-dark shadow-xl sticky top-0 z-10 p-4 border-b border-slate-700 lg:hidden">
+        <nav class="flex justify-center flex-wrap space-x-2 text-md font-medium text-text-light">
+             <a href="#cover-page" class="nav-link px-3 py-1 rounded-full transition duration-300 bg-slate-700 my-1 text-xs">Home</a>
+             <a href="#introduction" class="nav-link px-3 py-1 rounded-full transition duration-300 bg-slate-700 my-1 text-xs">About</a>
+             <a href="#projects" class="nav-link px-3 py-1 rounded-full transition duration-300 bg-slate-700 my-1 text-xs">Projects</a>
+             <a href="#skills" class="nav-link px-3 py-1 rounded-full transition duration-300 bg-slate-700 my-1 text-xs">Skills</a>
+             <a href="#conclusion" class="nav-link px-3 py-1 rounded-full transition duration-300 bg-slate-700 my-1 text-xs">SWOT</a>
+        </nav>
+    </header>
+
+    <main id="main-content" class="p-4 sm:p-10 lg:pl-72 max-w-screen-2xl mx-auto">
+
+        <section id="cover-page" class="flex flex-col justify-center p-8 sm:p-16 min-h-[80vh]">
+            
+            <div class="w-32 h-32 bg-slate-700 rounded-full flex items-center justify-center overflow-hidden mb-6 shadow-xl border-4 border-accent-lime">
+                <span class="text-4xl text-accent-lime font-bold">RT</span> 
+            </div>
+            
+            <p class="text-xl sm:text-2xl font-light text-accent-teal mb-4 tracking-widest uppercase">
+                Ronak Togadiya / Academic Portfolio
+            </p>
+
+            <h1 class="text-7xl sm:text-8xl font-black text-text-light mb-6 tracking-tight hero-title">
+                Data-Driven <br class="hidden sm:block"> & <span class="text-accent-lime">Model-Optimized</span>
+            </h1>
+            
+            <p class="text-xl italic text-slate-400 max-w-xl">
+                Expert in predictive modeling and cloud deployment, transforming raw data into high-value insights for scalable infrastructure.
+            </p>
+        
+        </section>
+
+        <div class="h-px bg-slate-700 my-16 mx-auto w-11/12"></div>
+ 
+        <section id="introduction" class="mb-20">
+            <h2 class="text-4xl font-extrabold mb-8 text-accent-teal border-b-4 border-slate-700/50 pb-2">
+                &lt; Philosophy: Data, Models, and Deployment &gt;
+            </h2>
+            <div class="space-y-6 text-lg leading-relaxed text-slate-300 p-6 bg-dark-surface rounded-xl shadow-lg border border-slate-700">
+                <p>My academic path is centered on the complete **Machine Learning Lifecycle**: from rigorous data preprocessing and model creation to efficient deployment via **Cloud Services**. I focus on building, validating, and stress-testing models for real-world impact.</p>
+                <p>I believe true technical mastery lies in the ability to deliver production-ready systems, not just theoretical models. This requires a strong foundation in **Statistical Analysis** and scalable cloud architecture.</p>
+                <p class="font-bold text-accent-lime">Core Focus: Python/Pandas, Azure/AWS, Statistical Modeling, and Problem Decomposition.</p>
+            </div>
+        </section>
+
+        <div class="h-px bg-slate-700 my-16 mx-auto w-11/12"></div>
+
+        <section id="resume" class="mb-20">
+            <h2 class="text-4xl font-extrabold mb-8 text-accent-teal border-b-4 border-slate-700/50 pb-2">
+                &lt; Academic & Professional Experience &gt;
+            </h2>
+
+            <div class="space-y-8">
+                <div class="p-6 bg-dark-surface rounded-xl shadow-xl border-l-4 border-accent-lime hover:shadow-2xl transition duration-300">
+                    <h3 class="text-2xl font-bold text-accent-lime mb-1">Bachelor of Technology in Computer Engineering</h3>
+                    <p class="text-xl font-medium text-text-light">Pandit Deendayal Energy University</p>
+                    <p class="text-slate-400 text-sm italic">2023 – Present</p>
+                    <p class="text-lg font-bold text-accent-teal mt-3">Current CGPA: 9.63 (Focus: Algorithms, Statistics, Cloud Computing)</p>
+                </div>
+
+                <div class="p-6 bg-dark-surface rounded-xl shadow-xl border-l-4 border-accent-lime hover:shadow-2xl transition duration-300">
+                    <h3 class="text-2xl font-bold text-accent-lime mb-1">Data Analysis Intern</h3>
+                    <p class="text-xl font-medium text-text-light">Innovatech Solutions, Ahmedabad</p>
+                    <p class="text-slate-400 text-sm italic">May – June 2024</p>
+                    <ul class="list-disc list-outside ml-6 text-slate-300 space-y-2 mt-3 text-base">
+                        <li>Assisted senior analysts in cleaning and visualizing large customer datasets using **Python (Pandas, Matplotlib)**.</li>
+                        <li>Contributed to the development of reporting dashboards, improving data accessibility for non-technical teams by 20%.</li>
+                        <li>Gained hands-on experience with agile workflows and version control (**Git**).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="h-px bg-slate-700 my-16 mx-auto w-11/12"></div>
+
+        <section id="projects" class="mb-20">
+            <h2 class="text-4xl font-extrabold mb-8 text-accent-teal border-b-4 border-slate-700/50 pb-2">
+                &lt; Applied Research: Data Science & Cloud &gt;
+            </h2>
+
+            <div class="project-card mb-10 p-8 bg-dark-surface rounded-2xl shadow-xl border border-slate-700 transition duration-300">
+                <h3 class="text-3xl font-bold mb-2 text-accent-lime">Housing Price Predictive Model</h3>
+                <p class="text-md font-normal text-slate-400 mb-4">Machine Learning and Statistical Regression</p>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+                    <div class="p-3 bg-slate-800 rounded-lg border-l-2 border-accent-teal">
+                        <h4 class="font-bold text-base accent-teal mb-1">Technology</h4>
+                        <p class="text-slate-300 font-bold">Python, Scikit-learn, Jupyter</p>
+                    </div>
+                    <div class="p-3 bg-slate-800 rounded-lg border-l-2 border-accent-teal">
+                        <h4 class="font-bold text-base accent-teal mb-1">Focus</h4>
+                        <p class="text-slate-300">Feature Engineering, Model Tuning</p>
+                    </div>
+                    <div class="p-3 bg-slate-800 rounded-lg border-l-2 border-accent-teal">
+                        <h4 class="font-bold text-base accent-teal mb-1">Metrics</h4>
+                        <p class="text-slate-300">Achieved R² score of 0.89</p>
+                    </div>
+                    <div class="p-3 bg-slate-800 rounded-lg border-l-2 border-accent-teal">
+                        <h4 class="font-bold text-base accent-teal mb-1">Challenge</h4>
+                        <p class="text-slate-300">Handling multicollinearity in complex urban datasets.</p>
+                    </div>
+                </div>
+                
+                <p class="text-base text-slate-300 mt-6">
+                    <span class="font-semibold text-accent-teal">Key Achievement:</span> Developed a Multivariate Linear Regression model and rigorously tested it against other models (Random Forest), demonstrating proficiency in selecting, optimizing, and validating predictive statistical models.
+                </p>
+                <p class="mt-4 text-sm text-accent-teal font-semibold">Artifact: <a href="#" class="hover:underline">Jupyter Notebook & Report</a></p>
+            </div>
+
+            <div class="project-card p-8 bg-dark-surface rounded-2xl shadow-xl border border-slate-700 transition duration-300">
+                <h3 class="text-3xl font-bold mb-2 text-accent-lime">Cloud-Native Image Processing Pipeline</h3>
+                <p class="text-md font-normal text-slate-400 mb-4">Serverless Architecture & Scalable Processing</p>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+                    <div class="p-3 bg-slate-800 rounded-lg border-l-2 border-accent-teal">
+                        <h4 class="font-bold text-base accent-teal mb-1">Platform</h4>
+                        <p class="text-slate-300 font-bold">AWS (S3, Lambda, DynamoDB)</p>
+                    </div>
+                    <div class="p-3 bg-slate-800 rounded-lg border-l-2 border-accent-teal">
+                        <h4 class="font-bold text-base accent-teal mb-1">Backend</h4>
+                        <p class="text-slate-300 font-bold">Node.js / Python Runtime</p>
+                    </div>
+                    <div class="p-3 bg-slate-800 rounded-lg border-l-2 border-accent-teal">
+                        <h4 class="font-bold text-base accent-teal mb-1">Architecture</h4>
+                        <p class="text-slate-300">Event-Driven Serverless</p>
+                    </div>
+                    <div class="p-3 bg-slate-800 rounded-lg border-l-2 border-accent-teal">
+                        <h4 class="font-bold text-base accent-teal mb-1">Focus</h4>
+                        <p class="text-slate-300">Cost Optimization, Elasticity</p>
+                    </div>
+                </div>
+                
+                <p class="text-base text-slate-300 mt-6">
+                    <span class="font-semibold text-accent-teal">Key Achievement:</span> Designed and implemented a fully scalable, cost-efficient pipeline where image uploads to S3 trigger Lambda functions for metadata extraction and storage in DynamoDB. This project demonstrated practical cloud-native deployment skills.
+                </p>
+                <p class="mt-4 text-sm text-accent-teal font-semibold">Artifact: <a href="https://github.com/ronakt/image-pipeline" class="hover:underline">GitHub Repository (Dummy Link)</a></p>
+            </div>
+        </section>
+
+        <div class="h-px bg-slate-700 my-16 mx-auto w-11/12"></div>
+
+        <section id="skills" class="mb-20">
+            <h2 class="text-4xl font-extrabold mb-8 text-accent-teal border-b-4 border-slate-700/50 pb-2">
+                &lt; Advanced Technical Competencies &gt;
+            </h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                
+                <div class="p-6 bg-dark-surface rounded-xl border border-slate-700 shadow-lg hover:border-accent-lime transition duration-300">
+                    <h3 class="text-2xl font-bold mb-2 text-accent-lime">Python Data Ecosystem</h3>
+                    <p class="text-slate-300">Advanced proficiency in **Pandas** for ETL/preprocessing, **NumPy** for numerical computation, and **Scikit-learn** for production ML model training.</p>
+                </div>
+
+                <div class="p-6 bg-dark-surface rounded-xl border border-slate-700 shadow-lg hover:border-accent-lime transition duration-300">
+                    <h3 class="text-2xl font-bold mb-2 text-accent-lime">Cloud Computing & MLOps</h3>
+                    <p class="text-slate-300">Hands-on experience with **AWS Lambda, S3, and DynamoDB**. Focus on cloud-agnostic deployment principles and basic **MLOps** principles for model serving.</p>
+                </div>
+
+                <div class="p-6 bg-dark-surface rounded-xl border border-slate-700 shadow-lg hover:border-accent-teal transition duration-300">
+                    <h3 class="text-2xl font-bold mb-2 text-accent-teal">Core Programming Languages</h3>
+                    <p class="text-slate-300">Fluent in **Python** (primary for Data Science), **Java** (for object-oriented design), and **SQL** (for data querying and relational management).</p>
+                </div>
+
+                <div class="p-6 bg-dark-surface rounded-xl border border-slate-700 shadow-lg hover:border-accent-teal transition duration-300">
+                    <h3 class="text-2xl font-bold mb-2 text-accent-teal">Statistical Foundation</h3>
+                    <p class="text-slate-300">Strong theoretical and practical background in hypothesis testing, regression analysis, and dimensionality reduction, vital for model interpretation.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <div class="h-px bg-slate-700 my-16 mx-auto w-11/12"></div>
+
+        <section id="leadership" class="mb-20">
+            <h2 class="text-4xl font-extrabold mb-8 text-accent-teal border-b-4 border-slate-700/50 pb-2">
+                &lt; Teamwork and Collaborative Excellence &gt;
+            </h2>
+            
+            <div class="p-6 bg-dark-surface rounded-xl shadow-xl border-l-4 border-accent-lime">
+                <h3 class="text-2xl font-bold mb-3 text-accent-lime">Team Lead: College Data Visualization Hackathon</h3>
+                
+                <h4 class="font-bold text-xl mb-1 text-text-light">Roles and Contributions:</h4>
+                <ul class="list-disc ml-6 space-y-2 text-slate-300">
+                    <li>Led a three-person team in a 24-hour hackathon to visualize global economic trends.</li>
+                    <li>Managed project decomposition, assigning data fetching, processing, and visualization tasks to optimize workflow.</li>
+                    <li>**Key Result:** Delivered a top-3 winning visualization based on clarity, design, and statistical rigor, demonstrating strong leadership under pressure.</li>
+                </ul>
+
+                <h4 class="font-bold text-xl mt-4 mb-1 text-text-light">Team Dynamics and Key Takeaways:</h4>
+                <p class="text-slate-300">Learned the essential skill of **translating ambiguous goals** into concrete, executable technical sub-tasks, and prioritizing feature delivery over perfection.</p>
+            </div>
+        </section>
+
+        <div class="h-px bg-slate-700 my-16 mx-auto w-11/12"></div>
+
+        <section id="ethics" class="mb-20">
+            <h2 class="text-4xl font-extrabold mb-8 text-accent-teal border-b-4 border-slate-700/50 pb-2">
+                &lt; Ethical AI and Algorithmic Fairness &gt;
+            </h2>
+            
+            <div class="p-6 bg-dark-surface rounded-xl shadow-xl border border-slate-700">
+                <h3 class="text-2xl font-bold mb-3 text-accent-lime">Case Study: Mitigating Bias in Predictive Models</h3>
+                
+                <p class="text-lg font-medium text-slate-300 mb-4">In the **Housing Price Predictive Model**, the ethical challenge was ensuring the model did not perpetuate **systemic socio-economic bias** present in the training data.</p>
+
+                <h4 class="text-xl font-bold mt-4 mb-2 text-accent-teal">Analysis of Ethical Implications</h4>
+                <ul class="list-disc ml-6 space-y-2 text-slate-300">
+                    <li>**Bias Detection:** Conducted rigorous sensitivity analysis on protected features (e.g., zip codes) to identify proxy discrimination.</li>
+                    <li>**Data Intervention:** Applied **oversampling/undersampling** techniques to features representing minority demographics to balance representation in the training set.</li>
+                    <li>**Transparency:** Documented all modeling decisions and fairness metrics for external auditing, promoting model interpretability.</li>
+                </ul>
+
+                <h4 class="text-xl font-bold mt-4 mb-2 text-accent-teal">Personal Reflections on Responsibility</h4>
+                <p class="text-slate-300">As a developer of AI systems, my responsibility extends beyond accuracy to **social impact**. This requires constantly seeking and mitigating the latent biases within datasets before they become baked into a production model.</p>
+            </div>
+        </section>
+
+        <div class="h-px bg-slate-700 my-16 mx-auto w-11/12"></div>
+
+        <section id="aspirations" class="mb-20">
+            <h2 class="text-4xl font-extrabold mb-8 text-accent-teal border-b-4 border-slate-700/50 pb-2">
+                &lt; Trajectory: Deep Learning & MLOps &gt;
+            </h2>
+            <p class="text-lg mb-6 text-slate-300">My immediate goal is an entry-level position as a **Data Analyst** or **Jr. ML Engineer**, aspiring toward specialization in **Deep Learning Architectures** and scalable **MLOps** pipelines.</p>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="p-6 bg-dark-surface rounded-xl border border-slate-700">
+                    <h3 class="text-2xl font-bold mb-3 text-accent-lime">Next Steps in Learning:</h3>
+                    <ul class="list-disc list-inside ml-4 space-y-2 text-slate-300">
+                        <li>Mastering advanced Deep Learning frameworks (**TensorFlow/PyTorch**).</li>
+                        <li>Gaining professional certification in cloud platforms (**AWS Certified Cloud Practitioner or Azure Data Scientist Associate**).</li>
+                    </ul>
+                </div>
+                <div class="p-6 bg-dark-surface rounded-xl border border-slate-700">
+                    <h3 class="text-2xl font-bold mb-3 text-accent-teal">Action Plan:</h3>
+                    <ol class="list-decimal list-inside ml-4 space-y-2 text-slate-300">
+                        <li>**Advanced Project:** Complete a Deep Learning project (e.g., CNN for image recognition).</li>
+                        <li>**Skill Expansion:** Integrate **Docker** and **Kubernetes** into project deployment workflows.</li>
+                        <li>**Networking:** Actively participate in data science and cloud meetups.</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <div class="h-px bg-slate-700 my-16 mx-auto w-11/12"></div>
+
+        <section id="conclusion" class="mb-20">
+            <h2 class="text-4xl font-extrabold mb-8 text-accent-teal border-b-4 border-slate-700/50 pb-2">
+                &lt; Final Assessment & Summary &gt;
+            </h2>
+
+            <div class="overflow-x-auto p-6 bg-dark-surface rounded-xl shadow-xl border border-slate-700">
+                <h3 class="text-2xl font-bold mb-4 text-accent-lime">Summary:</h3>
+                <p class="text-lg leading-relaxed mb-6 text-slate-300">My academic career is a solid start in the data world. The key insight is that **Statistical rigor is the foundation of effective Machine Learning**, pushing me towards advanced model interpretation and cloud deployment readiness.</p>
+                
+                <h3 class="text-2xl font-bold mb-3 text-accent-teal">SWOT Analysis</h3>
+                <table class="min-w-full divide-y divide-slate-700">
+                    <tbody class="divide-y divide-slate-700">
+                        <tr class="hover:bg-slate-800/50">
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-bold text-green-500 w-1/4">Strengths (S)</td>
+                            <td class="px-6 py-4 text-base text-slate-300">Exceptional CGPA (**9.63**), Dual focus in **Data Science/Cloud**, Advanced proficiency in **Python (Pandas/Scikit-learn)**.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-800/50">
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-bold text-red-500 w-1/4">Weaknesses (W)</td>
+                            <td class="px-6 py-4 text-base text-slate-300">Limited exposure to large-scale distributed systems, Still learning advanced **Deep Learning frameworks** (TensorFlow/PyTorch).</td>
+                        </tr>
+                        <tr class="hover:bg-slate-800/50">
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-bold text-accent-teal w-1/4">Opportunities (O)</td>
+                            <td class="px-6 py-4 text-base text-slate-300">Surging demand for **Ethical AI** practitioners, Ability to pivot between Data Science and Data Engineering roles.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-800/50">
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-bold text-yellow-500 w-1/4">Threats (T)</td>
+                            <td class="px-6 py-4 text-base text-slate-300">High velocity of innovation in the ML/Cloud tooling ecosystem, requiring constant upskilling.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <footer class="mt-20 border-t border-slate-700 pt-8 text-center text-slate-500 text-sm">
+            <p> Ronak Togadiya | <a href="https://www.linkedin.com/in/ronak-togadiya/" class="hover:text-accent-teal">LinkedIn</a></p>
+            <p class="mt-1">Redesigned and Re-Contented with HTML & Tailwind CSS</p>
+        </footer>
+    </main>
+
+</body>
+</html>
